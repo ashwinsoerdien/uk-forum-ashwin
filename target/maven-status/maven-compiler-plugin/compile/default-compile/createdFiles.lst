@@ -1,0 +1,6 @@
+com/ashwin/ukforum/model/User.class
+com/ashwin/ukforum/model/Article.class
+com/ashwin/ukforum/controller/LoginController.class
+com/ashwin/ukforum/controller/UsersController.class
+com/ashwin/ukforum/model/LoginForm.class
+com/ashwin/ukforum/model/Comment.class

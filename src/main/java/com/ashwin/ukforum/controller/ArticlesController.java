@@ -3,6 +3,7 @@ package com.ashwin.ukforum.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -34,7 +35,7 @@ public class ArticlesController {
 	{
 		model.addAttribute("title", "Latest Articles");
 		
-		List<Article> allArticles = articleService.findAll();
+		List<Article> allArticles = articleService.getAllArticles();
 		model.addAttribute("allArticles", allArticles);
 		return "articles";
 	}
@@ -42,7 +43,7 @@ public class ArticlesController {
 	@RequestMapping(value = "/article/{id}")
 	public String showArticle(@PathVariable("id") Long id, ModelMap model)
 	{
-		Article article = articleService.findById(id);
+		Article article = articleService.getArticle(id);
 		
 		model.addAttribute("title", article.getTitle());
 		

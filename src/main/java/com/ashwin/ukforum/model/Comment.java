@@ -1,5 +1,6 @@
 package com.ashwin.ukforum.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,7 +24,9 @@ import javax.validation.constraints.NotBlank;
  */
 @Entity
 @Table(name="comments")
-public class Comment {
+public class Comment implements Serializable {
+
+	private static final long serialVersionUID = -7891339676364041183L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -49,6 +52,19 @@ public class Comment {
 	@Column(name="updated_at", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
+	
+	/**
+	 * 
+	 * @param article
+	 * @param user
+	 * @param content
+	 */
+	public Comment(Article article, User user, String content) {
+		this.article = article;
+		this.user = user;
+		this.content = content;
+		this.created_at = this.updated_at = new Date();
+	}
 	
 	@Override
 	public int hashCode() {

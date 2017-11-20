@@ -1,8 +1,9 @@
 package com.ashwin.ukforum.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,18 +20,20 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User implements Serializable {
 	
+	private static final long serialVersionUID = -7659216941583991925L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name="username", nullable=false, length=30, unique=true)
-	@Size(min=6, message="Your username must be contain at least 6 characters")
+	@Size(min=6, message="Your username must contain at least 6 characters")
 	private String username;
 	
-	@Column(name="password_hash", nullable=false, length=60)
-	private String passwordHash;
+	@Column(name="password", nullable=false, length=60)
+	private String password;
 	
 	@Column(name="created_at", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -44,16 +47,12 @@ public class User {
 	private boolean admin = false;	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Article> articles = new HashSet<Article>();
+	private List<Article> articles = new ArrayList<Article>();
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Comment> comments = new HashSet<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 
-	public User(Long id, String username, String passwordHash) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.passwordHash = passwordHash;
+	public User() {
 		this.admin = false;
 		this.created_at = new Date();
 		this.updated_at = this.created_at;
@@ -61,7 +60,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + passwordHash + ", created_at="
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", created_at="
 				+ created_at + ", updated_at=" + updated_at + ", is_admin=" + admin + "]";
 	}
 	
@@ -106,14 +105,22 @@ public class User {
 		this.admin = admin;
 	}
 
-	public Set<Article> getArticles() {
+	public List<Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(Set<Article> articles) {
+	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
 	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public Date getUpdated_at() {
 		return updated_at;
 	}
@@ -139,11 +146,11 @@ public class User {
 	}
 
 	public String getPasswordHash() {
-		return passwordHash;
+		return password;
 	}
 
-	public void setPasswordHash(String password) {
-		this.passwordHash = password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

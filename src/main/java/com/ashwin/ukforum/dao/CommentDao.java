@@ -1,13 +1,10 @@
-package com.ashwin.ukforum.service;
+package com.ashwin.ukforum.dao;
 
 import java.util.List;
-import java.util.Optional;
-
-import com.ashwin.ukforum.model.Article;
 import com.ashwin.ukforum.model.Comment;
-
-public interface CommentService {
-	
+ 
+public interface CommentDao {
+ 
 	// CREATE Comment
     public void addComment(Comment comment);
     
@@ -24,5 +21,5 @@ public interface CommentService {
     public List<Comment> getAllCommentsByArticleId(Long articleId);
     
     // LIST Comments for a given User
-    public List<Comment> getAllCommentsByUserId(Long userId); 
+    public List<Comment> getAllCommentsByUserId(Long userId);  
 }

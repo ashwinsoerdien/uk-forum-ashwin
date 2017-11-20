@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.ashwin.ukforum.model.LoginForm;
-import com.ashwin.ukforum.service.UserService;
+//import com.ashwin.ukforum.service.UserService;
 
 
 @Controller
 public class LoginController {
 	
-	@Autowired
-	private UserService userService;
+//	@Autowired
+//	private UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String showLogin()

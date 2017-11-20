@@ -1,47 +1,57 @@
 package com.ashwin.ukforum.service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ashwin.ukforum.dao.CommentDao;
 import com.ashwin.ukforum.model.Article;
 import com.ashwin.ukforum.model.Comment;
-import com.ashwin.ukforum.repository.CommentRepository;
 
-@Service("commentService")
+@Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private CommentRepository commentRepo;
-	
+	private CommentDao commentDao;
+
 	@Override
-	public Comment getComment(Long id) 
-	{
-		return commentRepo.findOne(id);		
+	@Transactional
+	public void addComment(Comment comment) {
+		commentDao.addComment(comment);		
 	}
 
 	@Override
-	public Long saveNewComment(Comment comment, Article article) {
-		comment.setCreated_at(new Date());
-		comment.setArticle(article);
-		comment.setUser(userService.currentUser());
-		commentRepo.saveAndFlush(comment);
-		
-		return comment.getId();
+	@Transactional(readOnly=true)
+	public Comment getComment(Long commentId) {
+		return commentDao.getComment(commentId);
 	}
 
 	@Override
+	@Transactional
+	public Comment updateComment(Comment comment) {
+		return commentDao.updateComment(comment);
+	}
+
+	@Override
+	@Transactional
 	public void deleteComment(Long commentId) {
-		// TODO Auto-generated method stub		
+		commentDao.deleteComment(commentId);
 	}
 
 	@Override
-	public void updateComment(Comment newComment, Long commentId) {
-		// TODO Auto-generated method stub		
+	@Transactional(readOnly=true)
+	public List<Comment> getAllCommentsByArticleId(Long articleId) {
+		return commentDao.getAllCommentsByArticleId(articleId);
 	}
-	
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Comment> getAllCommentsByUserId(Long userId) {
+		return commentDao.getAllCommentsByUserId(userId);
+	}	
 }

@@ -1,30 +1,41 @@
 package com.ashwin.ukforum.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name="articles")
-public class Article {
+public class Article implements Serializable {
+
+	private static final long serialVersionUID = 2131104359447287641L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
 	@Column(nullable = false, length = 300)
@@ -33,7 +44,10 @@ public class Article {
 	@Lob @Column(nullable = false)
 	private String content;
 	
-	private Set<Comment> comments = new HashSet<Comment>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    @OrderBy("created_at ASC")
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 	@Column(name="created_at", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -46,14 +60,11 @@ public class Article {
 	@Column(name="is_approved", nullable=false)
 	private boolean approved = true;
 	
-	public Article(Long id, String title, String content, User user) {
-		super();
-		this.id = id;
+	public Article(String title, String content, User user) {
 		this.title = title;
 		this.content = content;
 		this.user = user;
-		this.created_at = new Date();
-		this.updated_at = this.created_at;
+		this.created_at = this.updated_at = new Date();
 	}
 	
 	public String getTitle() {
@@ -92,10 +103,10 @@ public class Article {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Set<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 	public Date getCreated_at() {
