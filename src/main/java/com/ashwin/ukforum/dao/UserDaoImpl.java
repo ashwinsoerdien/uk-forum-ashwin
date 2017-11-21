@@ -18,6 +18,7 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
  
     public void addUser(User user) {
+    	
         sessionFactory.getCurrentSession().saveOrUpdate(user); 
     }
  

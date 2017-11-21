@@ -24,39 +24,16 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 
-	@Transactional(readOnly=true)
-	@Override
-	public UserDetails loadUserByUsername(final String username)
-		throws UsernameNotFoundException {
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    		com.ashwin.ukforum.model.User user = userDao.findByUserName(username);
 
-		com.ashwin.ukforum.model.User user = userDao.findByUserName(username);
-		List<GrantedAuthority> authorities =
-                                      buildUserAuthority(user.getUserRole());
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        for (UserRole role : user.getUserRole()){
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
+        }
 
-		return buildUserForAuthentication(user, authorities);
-
-	}
-
-	// Converts com.ashwin.ukforum.model.User user to
-	// org.springframework.security.core.userdetails.User
-	private User buildUserForAuthentication(com.ashwin.ukforum.model.User user,
-		List<GrantedAuthority> authorities) {
-		return new User(user.getUsername(), user.getPassword(),
-			true, true, true, true, authorities);
-	}
-
-	private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
-
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
-		// Build user's authorities
-		for (UserRole userRole : userRoles) {
-			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-		}
-
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-
-		return Result;
-	}
-
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+    }
 }

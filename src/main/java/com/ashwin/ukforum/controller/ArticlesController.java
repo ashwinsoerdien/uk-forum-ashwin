@@ -65,14 +65,14 @@ public class ArticlesController {
 	}
 	
 	@RequestMapping(value = "/new-article", method = RequestMethod.GET)
-	public String newUser(ModelMap model) {
+	public String newArticle(ModelMap model) {
 		Article article = new Article();
 		model.addAttribute("article", article);
 		return "new-article";
 	}
 	
 	@RequestMapping(value = "/delete-article", method = RequestMethod.GET)
-	public String deleteTodo(ModelMap model, @RequestParam Long id) {
+	public String deleteArticle(ModelMap model, @RequestParam Long id) {
 		articleService.deleteArticle(id);
 		model.clear(); // clear the model since you do not want to pass any variables when redirecting
 		return "redirect:articles"; // Go to the page to both Add and Edit Todos

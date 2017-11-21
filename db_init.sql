@@ -30,7 +30,7 @@ A forum web application for posting articles and comments.
 1. Obtain the project source files through Git (`git clone git@github.com:ashwinsoerdien/ashwin-uk-forum.git`) or download and extract the zip archive).
 2. Modify the configuration as needed for your MySQL database
 - Database Properties: Find these in: `src/main/resources/application.properties`
-- Run the `db_init.sql` file inside any MySQL editor to initialize the database with some initial users and articles.
+- Run the `database_init.sql` file inside any MySQL editor to initialize the database with some initial users and articles.
 
 3. Run the Maven `verify` goal, either in the IDE or through the command line, `$ mvn verify` from the project's directory. This will download all dependencies, and build the WAR file. Check Maven output to see if all tests and build are completed successfully.
 4. Deploy the WAR file to Apache Tomcat

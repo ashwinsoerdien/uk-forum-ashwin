@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ashwin.ukforum.model.User;
 import com.ashwin.ukforum.service.UserService;
+import com.ashwin.ukforum.validator.UserValidator;
 
 @Controller
 public class UsersController {
@@ -48,8 +49,8 @@ public class UsersController {
 		return "new-user";
 	}
 
-	@RequestMapping(value = "/new-user", method = RequestMethod.POST)
-	public String saveUser(ModelMap model, @Valid User user, BindingResult result) {
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public String registration(ModelMap model, @Valid User user, BindingResult result) {
 		if(result.hasErrors())
 		{
 			return "new-user";
@@ -61,6 +62,22 @@ public class UsersController {
 		model.addAttribute("user", user);
 		return "redirect:user/{user.id}";
 	}
+	
+	@RequestMapping(value = "/new-user", method = RequestMethod.POST)
+    public String registration(@ModelAttribute("user") User user, BindingResult bindingResult, ModelMap model) {
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.addUser(user);
+
+        securityService.autologin(user.getUsername(), user.getPassword());
+
+        return "redirect:/";
+    }
+	
 
 	@RequestMapping(value = "/delete-user", method = RequestMethod.GET)
 	public String deleteUser(ModelMap model, @RequestParam Long id) {
