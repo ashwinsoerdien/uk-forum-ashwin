@@ -15,7 +15,7 @@ The Data Access logic for the User, Article, and Comment objects are defined in 
 The Data Interaction Logic for User, Article, and Comment objects are defined in the project's *com.ashwin.ukforum.service* package
 The Request and Response handlers for the User, Article, and Comment objects are defined in the project's *com.ashwin.ukforum.controller* package. This package addionally includes a `LoginController` to handle request for Logging in and out.
 
-#Installation and Configuration
+# Installation and Configuration
 
 Requirements:
 - Java EE IDE such as Eclipse
@@ -26,16 +26,8 @@ Requirements:
 - Web server, such as Apache Tomcat 8.0 (tested only on Tomcat, probably works on other web servers too, maybe requires minor modifications).
 
 1. Obtain the project source files (`git clone` or download and extract zip archive).
-2. Modify the configuration as needed:
-- Database Properties: 
-
-Find these in: `src/main/resources/application.properties`
-```
-database.driver=com.mysql.jdbc.Driver
-database.url=jdbc:mysql://localhost:8889/ashwinukforum
-database.user=root
-database.password=root
-```
+2. Modify the configuration as needed for your MySQL database
+- Database Properties: Find these in: `src/main/resources/application.properties`
 
 3. Run Maven `verify` goal. This will download all dependencies, and build the WAR file. Check Maven output to see if all tests and build are completed successfully.
 4. Deploy the WAR file to Apache Tomcat
