@@ -17,10 +17,16 @@ public interface ArticleDao
 		// Get all Articles of a particular User (/articles/user/{id}
 		List<Article> getAllArticlesByUserId(Long userId);
 		
+		// Get all Articles of a particular User (/articles/user/{id}
+		List<Article> getApprovedArticlesByUserId(Long userId);
+		
+		// Get all Articles of a particular User (/articles/user/{id}
+		List<Article> getPendingArticlesByUserId(Long userId);
+				
 		// Get a particular Article (/article/{id}
 		Article getArticle(Long articleId);
 		
-		void addArticle(Article article);
+		void addArticle(Article article, Long userId);
 		
 		Article updateArticle(Article article);
 		

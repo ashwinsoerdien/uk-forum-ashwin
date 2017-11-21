@@ -52,14 +52,24 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional
-	public void addArticle(Article article) {
-		articleDao.addArticle(article);
+	public void addArticle(Article article, Long userId) {
+		articleDao.addArticle(article, userId);
 	}
 
 	@Override
 	@Transactional
 	public Article updateArticle(Article article) {
 		return articleDao.updateArticle(article);
+	}
+
+	@Override
+	public List<Article> getApprovedArticlesByUserId(Long userId) {
+		return articleDao.getApprovedArticlesByUserId(userId);
+	}
+
+	@Override
+	public List<Article> getPendingArticlesByUserId(Long userId) {
+		return articleDao.getPendingArticlesByUserId(userId);
 	}
 
 	

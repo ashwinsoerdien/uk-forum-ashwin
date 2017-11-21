@@ -26,15 +26,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List<Article> getLatest5Articles() {
 		return sessionFactory.getCurrentSession().createQuery("TOP 5 FROM Article a ORDER BY a.updated_at DESC").list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Article> getAllArticlesByUserId(Long userId) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM Article a WHERE a.user_id = :user_id");
-		query.setParameter("user_id", userId);
-		return query.getResultList();
-	}
+	}	
 
 	@Override
 	public Article getArticle(Long articleId) {
@@ -42,7 +34,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public void addArticle(Article article) {
+	public void addArticle(Article article, Long userId) {
 		sessionFactory.getCurrentSession().saveOrUpdate(article);		
 	}
 
@@ -58,7 +50,30 @@ public class ArticleDaoImpl implements ArticleDao {
         if (null != article) {
             this.sessionFactory.getCurrentSession().delete(article);
         }
-		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Article> getAllArticlesByUserId(Long userId) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Article a WHERE a.user_id = :user_id");
+		query.setParameter("user_id", userId);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Article> getApprovedArticlesByUserId(Long userId) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Article a WHERE a.user_id = :user_id AND a.is_approved='1'");
+		query.setParameter("user_id", userId);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Article> getPendingArticlesByUserId(Long userId) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Article a WHERE a.user_id = :user_id AND a.is_approved='0'");
+		query.setParameter("user_id", userId);
+		return query.getResultList();
 	}
  
 }

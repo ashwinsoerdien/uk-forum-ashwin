@@ -44,9 +44,8 @@ public class Article implements Serializable {
 	@Lob @Column(nullable = false)
 	private String content;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
-    @LazyCollection(LazyCollectionOption.EXTRA)
-    @OrderBy("created_at ASC")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "article", cascade = CascadeType.ALL)
+	@OrderBy("created_at ASC")
 	private List<Comment> comments = new ArrayList<Comment>();
 	
 	@Column(name="created_at", nullable=false)
@@ -66,6 +65,8 @@ public class Article implements Serializable {
 		this.user = user;
 		this.created_at = this.updated_at = new Date();
 	}
+	
+	public Article() { }
 	
 	public String getTitle() {
 		return title;

@@ -1,4 +1,3 @@
-<%@ page import="org.hibernate.jpa.criteria.predicate.IsEmptyPredicate"%>
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation.jspf"%>
 <div class="container">
@@ -12,7 +11,7 @@
 			<form:errors path="username" cssClass="text-warning" />
 		</fieldset>
 		<fieldset class="form-group">
-			<form:label path="password">Target Date</form:label>
+			<form:label path="password">Password</form:label>
 			<form:input path="password" type="password" class="form-control"
 				required="required" />
 			<form:errors path="password" cssClass="text-warning" />

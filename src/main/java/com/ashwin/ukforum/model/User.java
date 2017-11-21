@@ -3,7 +3,9 @@ package com.ashwin.ukforum.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,51 +21,71 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = -7659216941583991925L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="username", nullable=false, length=30, unique=true)
-	@Size(min=6, message="Your username must contain at least 6 characters")
+
+	@Column(name = "username", nullable = false, length = 30, unique = true)
+	@Size(min = 6, message = "Your username must contain at least 6 characters")
 	private String username;
-	
-	@Column(name="password", nullable=false, length=60)
+
+	@Column(name = "password", nullable = false, length = 60)
 	private String password;
-	
-	@Column(name="created_at", nullable=false)
+
+	@Column(name = "created_at", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_at;
-	
-	@Column(name="updated_at", nullable=false)
+
+	@Column(name = "updated_at", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated_at;
-	
-	@Column(name="is_admin", nullable=false)
-	private boolean admin = false;	
-	
+
+	@Column(name = "is_admin", nullable = false)
+	private boolean admin = false;
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Article> articles = new ArrayList<Article>();
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Comment> comments = new ArrayList<Comment>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<UserRole> userRole = new HashSet<UserRole>(0);
+	
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled = true;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public User() {
 		this.admin = false;
 		this.created_at = new Date();
 		this.updated_at = this.created_at;
-	}	
+	}
+
+	public User(String username, String password, boolean admin, Set<UserRole> userRole) {
+		this.username = username;
+		this.password = password;
+		this.setUserRole(userRole);
+	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", created_at="
-				+ created_at + ", updated_at=" + updated_at + ", is_admin=" + admin + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", created_at=" + created_at
+				+ ", updated_at=" + updated_at + ", is_admin=" + admin + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,12 +102,12 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;		
+		User other = (User) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;		
+			return false;
 		return true;
 	}
 
@@ -112,7 +134,7 @@ public class User implements Serializable {
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
-	
+
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -128,7 +150,7 @@ public class User implements Serializable {
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -145,12 +167,19 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public String getPasswordHash() {
+	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public Set<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
+	}
 }

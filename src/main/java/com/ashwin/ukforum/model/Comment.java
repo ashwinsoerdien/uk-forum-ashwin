@@ -66,6 +66,8 @@ public class Comment implements Serializable {
 		this.created_at = this.updated_at = new Date();
 	}
 	
+	public Comment() { }
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

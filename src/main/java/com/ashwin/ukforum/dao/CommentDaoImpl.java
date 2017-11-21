@@ -19,8 +19,7 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public void addComment(Comment comment) {
-		sessionFactory.getCurrentSession().saveOrUpdate(comment); 
-		
+		sessionFactory.getCurrentSession().saveOrUpdate(comment);		
 	}
 
 	@Override

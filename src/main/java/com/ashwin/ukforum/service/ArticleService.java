@@ -20,7 +20,13 @@ public interface ArticleService {
     // Get all Articles of a particular User (/articles/user/{id}
     List<Article> getAllArticlesByUserId(Long userId);
     
-    public void addArticle(Article article);
+    // Get all Approved Articles of a particular User (/articles/user/{id}
+ 	List<Article> getApprovedArticlesByUserId(Long userId);
+ 		
+	// Get all Pending Articles of a particular User (/articles/user/{id}
+	List<Article> getPendingArticlesByUserId(Long userId);
+    
+    public void addArticle(Article article, Long userId);
     public Article updateArticle(Article article);
     
 }

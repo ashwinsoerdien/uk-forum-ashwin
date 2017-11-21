@@ -1,7 +1,11 @@
-<%@page import="org.hibernate.jpa.criteria.predicate.IsEmptyPredicate"%>
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation.jspf"%>
-
+<c:if test="${not empty error}">
+	<div>${error}</div>
+</c:if>
+<c:if test="${not empty message}">
+	<div>${message}</div>
+</c:if>
 <form method="POST" action="/login" class="form-signin">
   <div class="form-group">
     <label for="username">Username</label>

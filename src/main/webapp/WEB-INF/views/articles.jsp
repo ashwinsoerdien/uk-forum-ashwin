@@ -10,7 +10,7 @@
 			<small>Posted by ${article.user.username} on <fmt:formatDate
 					pattern="dd MMM yyyy" value="${article.updated_at}" /> at <fmt:formatDate
 					pattern="hh:mm a" value="${article.updated_at}" /></small> <a
-				href="/article/${article.id}" class="btn btn-link">See more of this post</a>
+				href="/article/${article.id}" class="btn btn-link">See comments for this article</a>
 		</div>
 		</div>
 	</c:forEach>

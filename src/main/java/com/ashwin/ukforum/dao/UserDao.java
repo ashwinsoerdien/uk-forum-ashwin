@@ -18,5 +18,9 @@ public interface UserDao {
     public void deleteUser(Long userId);
     
     // LIST Users
-    public List<User> getAllUsers();    
+    public List<User> getAllUsers();
+    
+    public Long getUserId(String username);
+    
+    public User findByUserName(String username);
 }
