@@ -45,11 +45,13 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Long getUserId(String username) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM User u WHERE u.username = :username");
+		Query query = sessionFactory.getCurrentSession().createQuery("SELECT u.id FROM User u WHERE u.username = :username");
 		query.setParameter("username", username);
-		return new Long(query.getFirstResult());
+		List<Long> results = query.getResultList();		
+		return results.get(0);
 	}
 
 	@SuppressWarnings("unchecked")

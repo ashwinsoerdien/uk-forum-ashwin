@@ -52,12 +52,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional
-	public void addArticle(Article article, Long userId) {
-		articleDao.addArticle(article, userId);
-	}
-
-	@Override
-	@Transactional
 	public Article updateArticle(Article article) {
 		return articleDao.updateArticle(article);
 	}
@@ -72,5 +66,20 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.getPendingArticlesByUserId(userId);
 	}
 
-	
+	@Override
+	public List<Article> getMatchingArticlesByKeyword(String keyword) {
+		return articleDao.getMatchingArticlesByKeyword(keyword);
+	}
+
+	@Override
+	@Transactional
+	public void addArticle(Article article) {
+		articleDao.addArticle(article);		
+	}
+
+	@Override
+	@Transactional
+	public void approveArticle(Article article, boolean status) {
+		articleDao.approveArticle(article, status);		
+	}
 }

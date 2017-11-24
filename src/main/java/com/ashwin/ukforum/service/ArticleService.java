@@ -25,8 +25,12 @@ public interface ArticleService {
  		
 	// Get all Pending Articles of a particular User (/articles/user/{id}
 	List<Article> getPendingArticlesByUserId(Long userId);
+        
+    public void addArticle(Article article);
     
-    public void addArticle(Article article, Long userId);
     public Article updateArticle(Article article);
     
+    public void approveArticle(Article article, boolean status);
+    
+    List<Article> getMatchingArticlesByKeyword(String keyword);
 }

@@ -66,7 +66,9 @@ public class Comment implements Serializable {
 		this.created_at = this.updated_at = new Date();
 	}
 	
-	public Comment() { }
+	public Comment() { 
+		//this.created_at = this.updated_at = new Date();
+	}
 	
 	@Override
 	public int hashCode() {

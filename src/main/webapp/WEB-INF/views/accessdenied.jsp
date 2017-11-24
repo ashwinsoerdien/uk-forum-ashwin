@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UK Forum - Access Denied</title>
+<title>UK Forum - Error</title>
 </head>
 <body>
-<h1>You cannot access this page. Please go back to <a href="/login">log in</a> and try again.</h1>
+<h1>This page cannot be found. Please check another page.</h1>
 </body>
 </html>

@@ -39,13 +39,12 @@ public class CommentDaoImpl implements CommentDao {
         if (null != comment) {
             this.sessionFactory.getCurrentSession().delete(comment);
         }
-		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentsByArticleId(Long articleId) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM Comment c WHERE c.article_id = :article_id");
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Comment c WHERE c.article.id = :article_id");
 		query.setParameter("article_id", articleId);
 		return query.getResultList();
 	}
@@ -53,11 +52,8 @@ public class CommentDaoImpl implements CommentDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> getAllCommentsByUserId(Long userId) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM Comment c WHERE c.user_id = :user_id");
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Comment c WHERE c.user.id = :user_id");
 		query.setParameter("user_id", userId);
 		return query.getResultList();
-	}
- 
-    
- 
+	} 
 }

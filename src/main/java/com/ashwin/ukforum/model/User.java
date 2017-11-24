@@ -69,9 +69,6 @@ public class User implements Serializable {
 	}
 
 	public User() {
-		this.admin = false;
-		this.created_at = new Date();
-		this.updated_at = this.created_at;
 	}
 
 	public User(String username, String password, boolean admin, Set<UserRole> userRole) {

@@ -20,18 +20,20 @@ A forum web application for posting articles and comments.
 # Installation and Configuration
 
 ## Requirements:
-- Java EE IDE such as Eclipse
+- Java EE IDE such as Eclipse for running the project
 - JDK 8
-- Maven project configuration tool. This can be stand alone or run through Eclipse
-- MySQL database. This can be stand alone or through a dynamic server environment such as WAMP or MAMP.
+- Maven for project configuration and dependency management. Maven commands can be run from a Command Line Interface or through Eclipse.
+- MySQL database. This can be stand alone or through a bundled package, such as WAMP for Windows or MAMP on macOS.
 - Apache Tomcat 7.x web server
 - Web server, such as Apache Tomcat 8.0 (tested only on Tomcat, probably works on other web servers too, maybe requires minor modifications).
 
 1. Obtain the project source files through Git (`git clone git@github.com:ashwinsoerdien/ashwin-uk-forum.git`) or download and extract the zip archive).
 2. Modify the configuration as needed for your MySQL database
-- Database Properties: Find these in: `src/main/resources/application.properties`
+- Database Properties: Find these in: `src/main/resources/application.properties`. Modify the database URL and port accordingly to your environment.
 - Run the `db_init.sql` file inside any MySQL editor to initialize the database with some initial users and articles.
 
 3. Run the Maven `verify` goal, either in the IDE or through the command line, `$ mvn verify` from the project's directory. This will download all dependencies, and build the WAR file. Check Maven output to see if all tests and build are completed successfully.
-4. Deploy the WAR file to Apache Tomcat
-6. Go to `http://your-server-address:8080/` (if deployed with default Tomcat settings) to check and ensure the web app is working.
+4. Running the project:
+- Using and IDE: Run the project by selecting Build Maven...>
+- Deploy the compiled WAR file, found in `src/main/java/` in the Apache Tomcat server
+6. Go to `http://your-server-address:8080/` (if deployed with default Tomcat settings) to check and ensure the forum web app is working.

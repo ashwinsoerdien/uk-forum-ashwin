@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ashwin.ukforum.model.Article;
+import com.ashwin.ukforum.model.Comment;
 import com.ashwin.ukforum.model.User;
  
 public interface ArticleDao 
@@ -26,9 +27,13 @@ public interface ArticleDao
 		// Get a particular Article (/article/{id}
 		Article getArticle(Long articleId);
 		
-		void addArticle(Article article, Long userId);
+		void addArticle(Article article);
 		
 		Article updateArticle(Article article);
 		
-		void deleteById(Long articleId);  
+		void deleteById(Long articleId);
+		
+		void approveArticle(Article article, boolean status);
+		
+		List<Article> getMatchingArticlesByKeyword(String keyword);
 }

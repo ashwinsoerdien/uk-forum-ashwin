@@ -11,12 +11,12 @@
 			<small>Posted by ${article.user.username} on <fmt:formatDate
  					pattern="dd MMM yyyy" value="${article.updated_at}" /> at <fmt:formatDate 
  					pattern="hh:mm a" value="${article.updated_at}" /></small> 
- 			<p><a href="/article/${article.id}" class="btn btn-link">See more of this post</a></p>
+ 			<p><a href="/article/${article.id}" class="btn btn-link">See more..</a></p>
 		</div>
 		</div>
 	</c:forEach>
 </div>
 
-<a href="/new-article" class="btn btn-primary">Post your own Article</a>
+<a href="/newarticle" class="btn btn-primary">Post your own Article</a>
 
 <%@ include file="common/footer.jspf"%>

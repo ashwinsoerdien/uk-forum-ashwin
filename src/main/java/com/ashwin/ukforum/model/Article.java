@@ -20,9 +20,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="articles")
@@ -38,9 +36,11 @@ public class Article implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
+    @Size(min=1, message="Your article needs a title")	
 	@Column(nullable = false, length = 300)
 	private String title;
 	
+	@Size(min=1, message="Your article needs some content")	
 	@Lob @Column(nullable = false)
 	private String content;
 	

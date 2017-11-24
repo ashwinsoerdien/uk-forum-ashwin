@@ -21,5 +21,6 @@ public interface CommentDao {
     public List<Comment> getAllCommentsByArticleId(Long articleId);
     
     // LIST Comments for a given User
-    public List<Comment> getAllCommentsByUserId(Long userId);  
+    public List<Comment> getAllCommentsByUserId(Long userId);
+    
 }

@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,14 +22,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ashwin.ukforum.model.User;
+import com.ashwin.ukforum.service.ArticleService;
 import com.ashwin.ukforum.service.UserService;
-import com.ashwin.ukforum.validator.UserValidator;
+
 
 @Controller
 public class UsersController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ArticleService articleService;
+	
+	// Get the current logged-in User for use in writing and retrieving articles
+	private Long retrieveLoggedInUserId()
+	{
+		Long result = userService.getUserId(retrieveLoggedInUsername());
+		
+		if (result != null)
+			return result;
+		else
+			return 0L;
+	}
+	
+	private String retrieveLoggedInUsername(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -65,15 +94,11 @@ public class UsersController {
 	
 	@RequestMapping(value = "/new-user", method = RequestMethod.POST)
     public String registration(@ModelAttribute("user") User user, BindingResult bindingResult, ModelMap model) {
-        userValidator.validate(user, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
         userService.addUser(user);
-
-        securityService.autologin(user.getUsername(), user.getPassword());
 
         return "redirect:/";
     }
@@ -103,6 +128,14 @@ public class UsersController {
 	public String showUser(ModelMap model, @PathVariable("id") Long id) {
 		User user = userService.getUser(id);
 		model.addAttribute("user", user);
+		return "user";
+	}
+	
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String showUser(ModelMap model) {
+		User user = userService.getUser(retrieveLoggedInUserId());
+		model.addAttribute("user", user);
+		model.addAttribute("articles", articleService.getAllArticlesByUserId(user.getId()));
 		return "user";
 	}
 }
