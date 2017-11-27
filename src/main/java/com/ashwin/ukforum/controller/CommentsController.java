@@ -62,8 +62,8 @@ public class CommentsController {
 		return "newcomment";
 	}
 	
-    @RequestMapping(value = "newcomment/article/{articleId}", method = RequestMethod.POST)
-    public @ResponseBody String addComment(@ModelAttribute("comment") Comment comment, BindingResult result, ModelMap model, @PathVariable("articleId") Long articleId) 
+    @RequestMapping(value = "/newcomment/article/{articleId}", method = RequestMethod.POST)
+    public String addComment(@ModelAttribute("comment") Comment comment, BindingResult result, ModelMap model, @PathVariable("articleId") Long articleId) 
     {    	
         if (result.hasErrors()) 
         {
@@ -81,8 +81,8 @@ public class CommentsController {
         
         commentService.addComment(comment);
         
-        model.clear();
+        model.addAttribute("article", article);
 
-        return "redirect:article/" + articleId;
+        return "redirect:/article/" + articleId;
     }
 }

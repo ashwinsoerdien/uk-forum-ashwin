@@ -2,12 +2,14 @@
 A forum web application for posting articles and comments.
 
 # Features
-- Log in with a pre-defined username and password (writer / writer123)
+- Log in with a pre-defined username and password (writer / writer123). This username is also and **Administrator**
+- Additional users, who have no administrative rights, are ashwin/ashwin, and phoebe/phoebe.
 - Go to *All Articles* from any page to see all posted articles by all users
 - Go to *My Articles* from any page to see all posted articles by the current logged in user
 - For each Article, click *See comments for this article* to see its associated comments
 - In each Article, when logged in, click *Add your comment* to comment on the current article
 - If the current logged in user is the writer of the article, then they can delete the article
+- If the current logged in user is an Administrator, they will see a button to **Manage Articles**
 
 # Project Structure
 1. The User, Article, and Comment objects are defined in the project's **com.ashwin.ukforum.model** package
@@ -15,7 +17,7 @@ A forum web application for posting articles and comments.
 3. The Data Interaction Logic for User, Article, and Comment objects are defined in the project's **com.ashwin.ukforum.service** package
 4. The Request and Response handlers for the User, Article, and Comment objects are defined in the project's **com.ashwin.ukforum.controller** package. This package addionally includes a `LoginController` to handle request for Logging in and out.
 5. For utilization of the built-in authentication mechanisms of the Java Spring library, the Spring Security dependency was used which faciliates the logging in and out of user as well as the restriction of visitors and users from certain pages.
--- Spring Security was used to restrict non-authenticated users from creating and Article and posting a Comment. They are only able to do so once they have logged in.
+-- Spring Security was used to restrict non-authenticated users from creating and Article and posting a Comment. They are only able to do so once they have logged in. It was also used to define User roles such as *Administrator*.
 
 # Installation and Configuration
 

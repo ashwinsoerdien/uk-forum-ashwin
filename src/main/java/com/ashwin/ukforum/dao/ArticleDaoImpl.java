@@ -20,13 +20,13 @@ public class ArticleDaoImpl implements ArticleDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Article> getAllArticles() {
-		return sessionFactory.getCurrentSession().createQuery("FROM Article a ORDER BY a.updated_at DESC").list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Article a ORDER BY a.created_at DESC").list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Article> getLatest5Articles() {
-		return sessionFactory.getCurrentSession().createQuery("FROM Article a ORDER BY a.updated_at DESC").setMaxResults(5).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Article a ORDER BY a.created_at DESC").setMaxResults(5).list();
 	}	
 
 	@Override
